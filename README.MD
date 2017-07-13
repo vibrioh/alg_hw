@@ -1,1 +1,1 @@
-*Some theoretical problem solutions.
+# Some theoretical problem solutions
