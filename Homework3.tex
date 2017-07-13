@@ -1,0 +1,353 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amsbsy,amsfonts,amssymb,amsthm,commath}
+\usepackage[round]{natbib}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+
+% math font macros
+
+\def\ddefloop#1{\ifx\ddefloop#1\else\ddef{#1}\expandafter\ddefloop\fi}
+% Blackboard fonts: \bbA, \bbB, ...
+\def\ddef#1{\expandafter\def\csname bb#1\endcsname{\ensuremath{\mathbb{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZ\ddefloop
+% Calligraphic fonts: \cA, \cB, ...
+\def\ddef#1{\expandafter\def\csname c#1\endcsname{\ensuremath{\mathcal{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZ\ddefloop
+% Bold fonts (for vectors, matrices, etc.): \vA, \vB, ..., \va, \vb, ...
+\def\ddef#1{\expandafter\def\csname v#1\endcsname{\ensuremath{\boldsymbol{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\ddefloop
+% Bold fonts (for vectors, matrices, etc.): \valpha, \vbeta, ...,  \vGamma, \vDelta, ...,
+\def\ddef#1{\expandafter\def\csname v#1\endcsname{\ensuremath{\boldsymbol{\csname #1\endcsname}}}}
+\ddefloop {alpha}{beta}{gamma}{delta}{epsilon}{varepsilon}{zeta}{eta}{theta}{vartheta}{iota}{kappa}{lambda}{mu}{nu}{xi}{pi}{varpi}{rho}{varrho}{sigma}{varsigma}{tau}{upsilon}{phi}{varphi}{chi}{psi}{omega}{Gamma}{Delta}{Theta}{Lambda}{Xi}{Pi}{Sigma}{varSigma}{Upsilon}{Phi}{Psi}{Omega}{ell}\ddefloop
+
+% other macros
+
+\newcommand\ip[1]{\langle #1 \rangle} % inner product
+\newcommand{\E}{\ensuremath{\mathbb{E}}} % expectation
+\renewcommand{\P}{\ensuremath{\mathbb{P}}} % probability
+\newcommand{\var}{\ensuremath{\operatorname{var}}} % variance
+\newcommand{\vol}{\ensuremath{\operatorname{vol}}} % volume
+\newcommand{\unitball}[1][d]{\ensuremath{B^{#1}}} % unit ball
+\newcommand{\unitsphere}[1][d-1]{\ensuremath{S^{#1}}} % unit sphere
+\newcommand{\logmgf}[1]{\ensuremath{\psi_{#1}}} % log mgf
+\newcommand{\Normal}{\ensuremath{\operatorname{N}}} % normal distribution
+
+% environments
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newenvironment{solution}{\noindent\emph{Solution.}}{\hfill$\square$}
+
+%-------------------------------------------------------------------------------
+% define my own command:
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\usepackage{listings} %For code in appendix
+  \lstset{language=Java, numbers=left, showspaces=false, %Set code style
+    showstringspaces=false, tabsize=2, breaklines=true}
+
+
+
+\begin{document}
+
+%-------------------------------------------------------------------------------
+\begin{center}
+\Large{} 
+\textbf{CSORW4231 HOMEWORK 3} \\
+\normalsize{}
+Due Mon, Mar 06 \\
+\large{Jun Hu \\
+\textbf{(jh3846)}} \\ 
+------------------------------------------------------------------------------------------------------------------
+\end{center}
+%-------------------------------------------------------------------------------
+
+\begin{problem}
+\large{Exercise 8.1-1 on page 193 and Exercise 8.2-4 on page 197. }
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item[\textbf{8.1-1}]
+    If the array is already sorted, we only need to compare $n-1$ times between all $n$ elements. So the smallest possible depth for the decision tree is $n-1$. Draw decision tree:
+    \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{/Users/vibrioh/Pictures/hw3_1}
+  \caption{Decision Tree of 8.1-1}
+  \label{fig:shapes}
+\end{figure}
+    
+    
+    
+    
+    \item[\textbf{8.2-4}]
+    Borrow the method from COUNTING-SORT by creating a count set $C$ for query.
+    Assuming given n integer set is $A$.
+    \begin{lstlisting}
+COUNTING(A)
+		Let C[0..k] be a new array
+		for i == 0 to k
+			C[i] = 0
+		for j == 1 to n
+			C[A[j]] = C[A[j]] + 1
+		for i = i to k
+			C[i] = C[i] + C[i + 1]	
+\end{lstlisting}
+The processing for COUNTING is:
+$$T_1 = c_1k + c_2n + c_3k + c_4 = \Theta(n + k)$$
+
+When given query input [a, b]:
+ \begin{lstlisting}
+QUERY(a, b)
+		return C[min(b, k)] - C[max(a - 1, 0)]
+\end{lstlisting}
+The query returning time is:
+$$T_2 = c_5 = \Theta(1)$$
+
+
+
+
+
+\end{enumerate}
+
+\end{solution}
+
+\newpage
+
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}
+Problem 8-4(b) on page 207 and 8-6(a and b) on page 208: Comparison lower bound. (If you would like to challenge yourself, check Exercise 9.1-2 on page 215.) 
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item[\textbf{8-4 b.}]
+    Taking one red jar to compare with blue jars to find a matched pair can be looked as a decision tree with $3$ children at each node.\\
+    The lower bound of Lower bound or the number of comparisons is the lower bound on the height of the decision tree.\\
+    Observation:
+    $$\mbox{Number}_{leaves} \geq n!$$
+    Let h be the height of the decision tree:
+    $$3^h \geq \mbox{Number}_{leaves} $$
+    Which is:
+    $$3^h \geq n!$$
+    Stirling Approximation:
+    $$n! = \sqrt[]{2\pi n}\left(\frac{n}{e}\right)^n\left(1 + \Theta\left(\frac{1}{n}\right)\right)$$
+    Thus:
+    \begin{align*}
+    h &\geq \log_3(n!) \\
+    &\geq \log_3\left(\sqrt[]{2\pi n}\left(\frac{n}{e}\right)^n\left(1 + \Theta\left(\frac{1}{n}\right)\right)\right) \\
+   &\geq \log_3\left(\frac{n}{e}\right)^n \\
+    &= n\log_3n - n\log_3e\\
+    &=\Omega(n\lg n)
+    \end{align*}
+    
+    
+    
+
+    \item[\textbf{8-6 a.}]
+    The possible ways are picking $n$ from $2n$ for combination:
+    $$\binom nk$$
+    
+    \item[\textbf{8-6 b.}]
+    $$2^h \geq \mbox{Number}_{leaves} \geq \binom nk$$
+    \begin{align*}
+    h &\geq \lg \binom nk \\
+    &\geq \lg\left(  \frac{2^{2n}}{\sqrt[]{\pi n}} \left(       1 + O\left(    \frac{1}{n}    \right)         \right)      \right) \\
+    &= \lg(2^{2n}) - \lg \sqrt[]{\pi n} + \lg \left(       1 + O\left(    \frac{1}{n}    \right)    \right)   \\
+    &= 2n - o(n)
+    \end{align*}
+
+  \end{enumerate}
+\end{solution}
+
+\clearpage
+
+
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}
+Problem 8-2 on page 206: Sorting in place in linear time. 4. Exercise 9.3-6 and Exercise 9.3-8 on page 223.
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item[\textbf{8-2 a.}]
+    \
+        \begin{lstlisting}
+SORT(A)
+		Let C[1..n] be a new array
+		j == 1
+		for i = 1 to n
+			if A[i] == 0
+				C[j] == A[i]
+			j = j + 1
+		for j = 1 to n
+			if A[i] == 1
+				C[j] == A[i]
+			j = j + 1
+		return C
+\end{lstlisting}
+The elements in A are collected into C keeping the same odder in A with the same key value 0 or 1, which mean the sort is stable.
+The array A has been visited twice in the algorithm, so $T = O(n)$
+
+    \item[\textbf{8-2 b.}]
+    \
+        \begin{lstlisting}
+SORT(A)
+		j == 1
+		for i = 1 to n
+			if A[i] == 0
+				exchange A[i] with A[j]
+				j = j + 1
+		return A
+\end{lstlisting}
+Only maintaining A and taking $O(n)$.
+
+    
+
+
+    \item[\textbf{8-2 c.}]
+    \
+            \begin{lstlisting}
+SORT(A)
+	for i = 1 to n - 1
+		for j = n down to i + 1
+			if A[j] < A[j - 1]
+				exchange A[j] with A[j - 1]
+	return A
+\end{lstlisting}
+
+
+
+\item[\textbf{8-2 d.}]
+Use algorithm in (a), which takes O(n) time.
+A b-bit key takes bit value as 0 or 1, we can sort in the running time of $$ O(b(n + 2)) = O(bn)$$ 
+
+\item[\textbf{8-2 e.}]
+\
+\begin{lstlisting}
+SORT(A)
+	Let C[1..k] be a new array
+	for i = 1 to k
+		C[i] == 0
+	for i = 1 to n
+		C[A[i]] = C[A[i]] + 1
+	for i = 2 to k
+		C[i] = C[i] + C[i - 1
+	j == 1
+	while j < n
+		A.copy = A[j]
+		if j != C[A.copy]
+			exchange A[C[A.copy]] with A[j]
+			C[A.copy] = C[A.copy] -1
+		else j = j + 1
+	return A
+\end{lstlisting}
+ The modified COUNTING-SORT is not stable.
+
+\item[\textbf{9.3-6}]
+QT(A, k) \\
+Let C be a new array with length k - 1 \\
+if k == 1 \\
+	\tab return \\
+else \\
+	\tab i = $\lfloor \frac{k}{2} \rfloor$ \\
+	\tab q = SELECT(A,$\lfloor i \frac{n}{k} \rfloor $ ) \\
+	\tab PARTITION(A, q) \\
+	\tab C.append(QT(A[1] to A[$\lfloor i \frac{n}{k} \rfloor $], $\lfloor \frac{k}{2} \rfloor$, C )) \\
+	\tab C.append(QT(A[$\lfloor i \frac{n}{k} \rfloor $ + 1 ] to A[n], $\lceil \frac{k}{2} \rceil$, C )) \\
+	\tab return q \\
+Draw a recursion tree. At the top level we need to find k − 1
+order statistics, and it costs O(n) to find one. For each of the two roof contains at the most $\lfloor \frac{k - 1}{2} \rfloor$ and $\lceil \frac{k - 1}{2} \rceil$order statistics The sum of the costs for these two nodes is O(n). The level of the tree is $\lg (k - 1)$, n numbers for each level, so the running time is $\Theta(n\lg k)$.
+
+\item[\textbf{9.3-8}]
+\
+\begin{lstlisting}
+MEDIAN(X, Y, n)
+if n == 1
+	return min(X[1], Y[1])
+if X[n/2] < Y[n/2]
+	return MEDIAN(X[n/2 + 1 ... n], Y[1 ... n/2], n/2)
+else
+	return MEDIAN(X[1 ... n/2], Y[n/2 + 1 .. n], n/2)	
+\end{lstlisting}
+
+
+\end{enumerate}
+
+\end{solution}
+
+\newpage
+
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}Problem 9.2(skip a and b) on page 225: Weighted median. 
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}
+  
+    \item[\textbf{9.2 c.}]
+Modify SELECT as:
+Let m be the median of median,
+Compute $\sum_{m_i < m} w_i$ and $ \sum_{m_i > m} w_i $,
+Check either exceeds 1/2,
+If so, recursive call for the one contain weighted median
+If not, return.
+Sp the running time keeps 
+$\Theta(n)$
+
+   \item[\textbf{9.2 d.}]
+   
+   
+   \item[\textbf{9.2 e}]
+
+
+    
+    
+  \end{enumerate}
+\end{solution}
+
+\newpage
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}
+Problem 11-4(a and b only) on page 284. 
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+   \item[\textbf{11-4 a.}]
+   
+      \item[\textbf{11-4 b.}]
+
+
+
+\end{enumerate}
+
+
+
+\end{solution}
+
+
+
+
+\end{document}

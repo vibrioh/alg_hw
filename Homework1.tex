@@ -1,0 +1,361 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amsbsy,amsfonts,amssymb,amsthm,commath}
+\usepackage[round]{natbib}
+\usepackage{hyperref}
+
+% math font macros
+
+\def\ddefloop#1{\ifx\ddefloop#1\else\ddef{#1}\expandafter\ddefloop\fi}
+% Blackboard fonts: \bbA, \bbB, ...
+\def\ddef#1{\expandafter\def\csname bb#1\endcsname{\ensuremath{\mathbb{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZ\ddefloop
+% Calligraphic fonts: \cA, \cB, ...
+\def\ddef#1{\expandafter\def\csname c#1\endcsname{\ensuremath{\mathcal{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZ\ddefloop
+% Bold fonts (for vectors, matrices, etc.): \vA, \vB, ..., \va, \vb, ...
+\def\ddef#1{\expandafter\def\csname v#1\endcsname{\ensuremath{\boldsymbol{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\ddefloop
+% Bold fonts (for vectors, matrices, etc.): \valpha, \vbeta, ...,  \vGamma, \vDelta, ...,
+\def\ddef#1{\expandafter\def\csname v#1\endcsname{\ensuremath{\boldsymbol{\csname #1\endcsname}}}}
+\ddefloop {alpha}{beta}{gamma}{delta}{epsilon}{varepsilon}{zeta}{eta}{theta}{vartheta}{iota}{kappa}{lambda}{mu}{nu}{xi}{pi}{varpi}{rho}{varrho}{sigma}{varsigma}{tau}{upsilon}{phi}{varphi}{chi}{psi}{omega}{Gamma}{Delta}{Theta}{Lambda}{Xi}{Pi}{Sigma}{varSigma}{Upsilon}{Phi}{Psi}{Omega}{ell}\ddefloop
+
+% other macros
+
+\newcommand\ip[1]{\langle #1 \rangle} % inner product
+\newcommand{\E}{\ensuremath{\mathbb{E}}} % expectation
+\renewcommand{\P}{\ensuremath{\mathbb{P}}} % probability
+\newcommand{\var}{\ensuremath{\operatorname{var}}} % variance
+\newcommand{\vol}{\ensuremath{\operatorname{vol}}} % volume
+\newcommand{\unitball}[1][d]{\ensuremath{B^{#1}}} % unit ball
+\newcommand{\unitsphere}[1][d-1]{\ensuremath{S^{#1}}} % unit sphere
+\newcommand{\logmgf}[1]{\ensuremath{\psi_{#1}}} % log mgf
+\newcommand{\Normal}{\ensuremath{\operatorname{N}}} % normal distribution
+
+% environments
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newenvironment{solution}{\noindent\emph{Solution.}}{\hfill$\square$}
+
+%-------------------------------------------------------------------------------
+% define my own command:
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\usepackage{listings} %For code in appendix
+  \lstset{language=Java, numbers=left, showspaces=false, %Set code style
+    showstringspaces=false, tabsize=2, breaklines=true}
+
+
+
+\begin{document}
+
+%-------------------------------------------------------------------------------
+\begin{center}
+\Large{} 
+CSORW4231 HOMEWORK 1 \\
+\normalsize{}
+Due Mon, Feb 06 \\
+\large{Jun Hu \\
+(jh3846)} \\ 
+------------------------------------------------------------------------------------------------------------------
+\end{center}
+%-------------------------------------------------------------------------------
+
+\begin{problem}[10 points]
+  Exercise 3.1-1 of the textbook (Page 52).
+\end{problem}
+
+\begin{solution}
+\\ \\Since $f(n)$ and $g(n)$ are asymptotically nonnegative:
+$$
+\left \{
+\begin{aligned}
+&0 \leq f(n) \leq max(f(n), g(n)) \leq f(n) +g(n) 	\qquad \qquad \qquad \qquad	&(1)\\
+&0 \leq g(n) \leq max(f(n), g(n)) \leq f(n) +g(n)	\qquad \qquad \qquad \qquad	&(2)
+\end{aligned}
+\right.
+$$
+By adding the two inequalities $(1)$ and $(2)$:
+$$
+0 \leq f(n) + g(n) \leq 2max(f(n), g(n)) \leq 2(f(n) +g(n))
+$$
+Therefore: $\exists \ c_1=\frac{1}{2}, \ c_2=1, \ n_0>0, \ \forall \ n \geq n_0$, s.t.
+$$
+0 \leq c_1(f(n) + g(n)) \leq max(f(n), g(n)) \leq  c_2(f(n) +g(n)) $$
+By definition:
+$$
+max(f(n), g(n)) = \Theta(f(n) +g(n))
+$$
+\end{solution}
+
+\newpage
+
+%-------------------------------------------------------------------------------
+\begin{center}
+\Large{} 
+CSORW4231 HOMEWORK 1 \\
+\normalsize{}
+Due Mon, Feb 06 \\
+\large{Jun Hu \\
+(jh3846)} \\ 
+------------------------------------------------------------------------------------------------------------------
+\end{center}
+%-------------------------------------------------------------------------------
+
+\begin{problem}[10 points]
+  Exercise 3.1-5 (Page 53).
+\end{problem}
+
+\begin{solution}
+\\ \\
+From $f(n) = \Omega(g(n))$, we get $\exists \ c_1 > 0, \ n_1 > 0, \ \forall \ n \geq n_1$,  s.t.
+$$0 \leq c_1g(n) \leq f(n) $$
+From $\  f(n) = O(g(n))$, we get $\exists \ c_2 > 0, \ n_2 > 0, \ \forall \ n \geq n_2$, s.t.
+$$0 \leq f(n) \leq c_2g(n) $$
+Let $\ n_0 \geq n_1 > 0$ and $ \ n_0 \geq n_2 > 0$, we get $\exists \ c_1 > 0, \ c_2 > 0, \ n_0  > 0 , \ \forall \ n \geq n_0$, s.t.
+$$0 \leq c_1g(n) \leq f(n) \leq c_2g(n)$$
+By definition:
+$$f(n) = \Theta(g(n))$$
+\\
+Also, from $f(n) = \Theta(g(n)$), we get
+$\exists \ c_3 > 0, \ c_4 > 0, \  n_3 > 0 \ \forall \ n \geq n_3$, s.t.
+$$0 \leq c_3g(n) \leq f(n) \leq c_4g(n)$$
+Separately:
+$$
+0 \leq c_3g(n) \leq f(n) \qquad \Rightarrow \qquad  f(n) = \Omega(g(n))
+$$
+$$
+0 \leq f(n) \leq c_4g(n) \qquad \Rightarrow \qquad f(n)=O(g(n))
+$$
+\end{solution}
+
+\newpage
+%-------------------------------------------------------------------------------
+\begin{center}
+\Large{} 
+CSORW4231 HOMEWORK 1 \\
+\normalsize{}
+Due Mon, Feb 06 \\
+\large{Jun Hu \\
+(jh3846)} \\ 
+------------------------------------------------------------------------------------------------------------------
+\end{center}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}[10 points]
+Problem 3-1(a), (b) and (c) (page 61).
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}
+    \item[(a)]
+    From $k \geq d$, $a_d > 0$:
+    \begin{align*}
+    \lim_{n \to \infty} \frac{p(n)}{n^k} 
+    =\lim_{n \to \infty} \frac{\sum_{i=0}^d a_i n^i}{n^k} 
+    =&\lim_{n \to \infty} \frac{a_0 + a_1 n + \cdots + a_{d-1} n^{d-1} + a_d n^d}{n^k} \\
+    =&\lim_{n \to \infty} \left( \frac{a_0}{n^k} + \frac{a_1}{n^{k-1}} + \cdots + \frac{a_{d-1}}{n^{k-d+1}} + \frac{a_d}{n^{k-d}} \right) 
+    =L \ (0 \leq L \leq a_d)
+    \end{align*}
+    Which is, $\exists$ $\delta > 0$, $\forall$ $n > n_0$, s.t.
+    \begin{align*}
+    \frac{p(n)}{n^k} - L \leq \delta \qquad \Rightarrow \qquad
+    p(n) \leq (L + \delta) n^k \leq (a_d + \delta) n^k
+     \end{align*}
+     Set $\delta = \frac{1}{2}a_d$, $\exists$ $c = \frac{3}{2}a_d > 0$, $n_0 > 0$, $\forall$ $n > n_0$, s.t.
+     \begin{align*}
+    0 \leq p(n) \leq cn^k \qquad \Rightarrow \qquad
+    p(n) = O(n^k)
+     \end{align*}
+     
+    \item[(b)]
+    From $k \leq d$, $a_d > 0$:
+    \begin{align*}
+    \lim_{n \to \infty} \frac{p(n)}{n^k} 
+    =\lim_{n \to \infty} \frac{\sum_{i=0}^d a_i n^i}{n^k} 
+    =&\lim_{n \to \infty} \frac{a_0 + a_1 n + \cdots + a_{d-1} n^{d-1} + a_d n^d}{n^k} \\
+    =&\lim_{n \to \infty} \left( \frac{a_0}{n^k} + \frac{a_1}{n^{k-1}} + \cdots + \frac{a_{d-1}}{n^{k-d+1}} + \frac{a_d}{n^{k-d}} \right) 
+    =L \ (a_d \leq L \rightarrow \infty)
+    \end{align*}
+    Which is, $\exists$ $\delta > 0$, $\forall$ $n > n_0$, s.t.
+    \begin{align*}
+    \frac{p(n)}{n^k} - L \geq -\delta \qquad \Rightarrow \qquad
+    p(n) \geq (L - \delta) n^k \geq (a_d - \delta) n^k
+     \end{align*}
+     Set $\delta = \frac{1}{2}a_d$, $\exists$ $c = \frac{1}{2}a_d > 0$, $n_0 > 0$, $\forall$ $n > n_0$, s.t.
+     \begin{align*}
+    p(n) \geq cn^k \geq 0 \qquad \Rightarrow \qquad
+    p(n) = \Omega(n^k)
+     \end{align*}
+    
+    \item[(c)]
+    From $k=d, a_d > 0$:
+     \begin{align*}
+    \lim_{n \to \infty} \frac{p(n)}{n^k} 
+    =\lim_{n \to \infty} \frac{\sum_{i=0}^d a_i n^i}{n^k} 
+    =&\lim_{n \to \infty} \frac{a_0 + a_1 n + \cdots + a_{d-1} n^{d-1} + a_d n^d}{n^k} \\
+    =&\lim_{n \to \infty} \left( \frac{a_0}{n^k} + \frac{a_1}{n^{k-1}} + \cdots + \frac{a_{d-1}}{n^{k-d+1}} + \frac{a_d}{n^{k-d}} \right) 
+    = a_d
+    \end{align*}
+    Which is, $\exists$ $\delta > 0$, $\forall$ $n > n_0$, s.t.
+    \begin{align*}
+    \left| \frac{p(n)}{n^k} - a_d \right| \leq \delta \qquad \Rightarrow \qquad
+    (a_d - \delta)n^k \leq p(n) \leq (a_d + \delta) n^k
+     \end{align*}
+     Set $\delta = \frac{1}{2}a_d$, $\exists$ $c_1 = \frac{1}{2}a_d > 0$, $c_2 = \frac{3}{2}a_d > 0$, $n_0 > 0$, $\forall$ $n > n_0$, s.t.
+     \begin{align*}
+    0 \leq c_1 n^k \leq p(n) \leq c_2 n^k \qquad \Rightarrow \qquad
+    p(n) = \Theta(n^k)
+     \end{align*}
+      
+  \end{enumerate}
+\end{solution}
+
+\newpage
+%-------------------------------------------------------------------------------
+\begin{center}
+\Large{} 
+CSORW4231 HOMEWORK 1 \\
+\normalsize{}
+Due Mon, Feb 06 \\
+\large{Jun Hu \\
+(jh3846)} \\ 
+------------------------------------------------------------------------------------------------------------------
+\end{center}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}[10 points]
+  Problem 3-4(b), (e) and (f) (Page 62).
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}
+    \item[(b)]
+    False.\\
+    Counterexample:
+    Set $f(n) = n, g(n) = n^2$, So $min(f(n), g(n)) = min(n, n^2) = n = f(n)$, but
+    $$f(n) + g(n) =  n + n^2 = \Theta(n^2) = \Theta(g(n))  \neq \Theta(min(f(n) + g(n)) $$
+   
+    \item[(e)]
+    False.\\
+    Counterexample:
+    When $0 < f(n) < 1$, $(f(n))^2 < f(n)$, e.g. $f(n) = \frac{1}{n}$ s.t. 
+    $$f(n) = \omega((f(n))^2)$$
+    
+    \item[(f)]
+    True.\\
+    From $f(n) = O(g(n))$: 
+    $ \exists$ $c>0$, $n_0>0$, $\forall$ $n > n_0$, s.t.
+    $$f(n) \leq cg(n)$$
+    Set $c'=\frac{1}{c}$, $ \exists$ $c'>0$, $n_0>0$, $\forall$ $n > n_0$, s.t.
+    $$g(n) \geq c'f(n) \qquad \Rightarrow \qquad g(n) = \Omega(f(n))$$
+    
+    
+  \end{enumerate}
+\end{solution}
+
+\newpage
+%-------------------------------------------------------------------------------
+\begin{center}
+\Large{} 
+CSORW4231 HOMEWORK 1 \\
+\normalsize{}
+Due Mon, Feb 06 \\
+\large{Jun Hu \\
+(jh3846)} \\ 
+------------------------------------------------------------------------------------------------------------------
+\end{center}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}[10 points]
+  Exercise 2.3-7 (Page 39).
+\end{problem}
+
+\begin{solution}
+\begin{lstlisting}
+EXISTENCE(S, x) { 
+		A = MERGE-SORT(S)				// Let A be set S in nondecreasing order
+		i = 1
+		j = n
+		while i < j							// Test sum from ends of the sorted set
+			if A[i] + A[j] == x
+				return true					// Find the two elements
+			else if A[i] + A[j] < x
+				i = i + 1
+			else
+				j = j - 1
+		return false						// Not find the two elements
+}
+\end{lstlisting}
+For line 2, MERGE-SORT costs $\Theta(nlgn)$; \\
+For line 3 - 4, initial assignment costs constant time $\Theta(1)$;\\
+For line 5, while loop condition costs $O(n)$;\\
+For line 6 - 11, while loop comparison body costs $O(n)$;\\
+For line 12, final return cost constant time $\Theta(1)$.\\
+Apparently, $\Theta(nlgn)$ is dominant in the algorithm. In sum, the runtime is $\Theta(nlgn)$.
+
+
+\end{solution}
+
+
+\newpage
+%-------------------------------------------------------------------------------
+\begin{center}
+\Large{} 
+CSORW4231 HOMEWORK 1 \\
+\normalsize{}
+Due Mon, Feb 06 \\
+\large{Jun Hu \\
+(jh3846)} \\ 
+------------------------------------------------------------------------------------------------------------------
+\end{center}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+
+\begin{problem}[10 points]
+  Problem 2-3 (Page 41). Skip (b), but do take a minute to think about the naive implementation. Also if you are not familiar with induction, work on (c) and (d) after next Monday’s class.
+\end{problem}
+
+\begin{solution}
+ \begin{enumerate}
+    \item[(a)] 
+    \begin{align*}
+    T(n) &= T(n-1) + c \qquad (c > 0 \ \mbox{is a constant })\\
+    &= T(n-2) + 2c = T(n-3) + 3c = \cdots \\
+    &= T(0) + cn \qquad (T(0) > 0 \ \mbox{is a constant }) \\
+    &= \Theta(n)
+    \end{align*}
+   
+    \item[(c)]
+    Basis: $i = n$, $y = \sum_{k = 0}^{-1}a_{k+n+1}x^k = 0$ True.\\
+    Induction steps: \\
+    \tab At the start of the $i$-th iteration in line 2 according to the loop invariant, s.t.
+    $$y = \sum_{k=0}^{n-(i+1)}a_{k+i+1}x^k$$
+    \tab After perform line 3, s.t.
+     \begin{align*}
+     y = a_i + x \left( \sum_{k=0}^{n-(i+1)}a_{k+i+1}x^k \right) &= a_i + \sum_{k=0}^{n-(i-1)}a_{k+i+1}x^{k+1} \\
+     &= \sum_{k=0}^{n-((i-1)+1)}a_{k+(i-1)+1}x^k
+     \end{align*}
+     \tab Which is the $(i-1)$-th iteration in line 2 according to the loop invariant.\\
+     Conclude: $i = 0$, perform line 3, s.t.
+     $$y = a_0 + x \left( \sum_{k=0}^{n-1}a_{k+1}x^k \right)\ = \sum_{k=0}^{n}a_{k}x^k$$
+    \tab Then, $i=-1$, the loop terminates.
+    \item[(d)]
+    From the analysis in (c), the code fragment exactly obtains the result of the polynomial $P(x)$ characterized by the coefficients $a_0, a_1, \ldots, a_n$.
+    
+    
+    
+  \end{enumerate}
+\end{solution}
+
+\end{document}
